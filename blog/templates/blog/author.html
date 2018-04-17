@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{author}}{% endblock %}
+{% block content %}
+{% include 'blog/auth_reg.html' %}
+<a href="{% url 'blog:index' %}"><h3>На главную страницу</h3></a>
+{% include 'blog/cloud.html' %}
+{% include 'blog/generator.html' %}
+{% include 'blog/paginator.html' %}
+{% endblock %}

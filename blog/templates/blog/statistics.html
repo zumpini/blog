@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% block title %}Статистика{% endblock %}
+{% block content %}
+{% include 'blog/auth_reg.html' %}
+<a href="{% url 'blog:index' %}"><h3>На главную страницу</h3></a>
+{% if statistics %}
+	<table class="statistics">
+		<tr><th></th><th>Пользователь</th><th>Дата просмотра</th><th>Количество просмотров</th></tr>
+		{% for entry in statistics %}
+			<tr>
+				<td>{{forloop.counter}}</td>
+				<td>{% if entry.user.username %}{{entry.user.username}}{% else %}<span class="anonym">Аноним</span>{% endif %}</td>
+				<td>{{entry.date}}</td>
+				<td>{{entry.total_views}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<p>Общее количество просмотров: {{total_views}}</p>
+{% else %}
+	<p>Данную статью ещё никто не просматривал</p>
+{% endif %}
+{% endblock %}

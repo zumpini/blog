@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta charset="UTF-8">
+		{% load staticfiles %}
+		<link href="{% static 'blog/main.css' %}" type="text/css" rel="stylesheet">
+		<!--<link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">-->
+	</head>
+<body>
+	<div id="main">
+		<div id="header"></div>
+		{% block content %}{% endblock %}
+		<div id="footer"></div>
+	</div>
+	{% comment %}
+	<script src="{% static 'blog/jquery.js' %}"></script>
+	<script src="{% static 'blog/main.js' %}"></script>
+	{% endcomment %}
+</body>
+</html>

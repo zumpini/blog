@@ -1,0 +1,7 @@
+{% if cathegories %}
+	<div id="cloud">
+		{% for c in cathegories %}
+			<a href="{% url 'blog:cathegory' c.name %}">{{c.name}}</a>
+		{% endfor %}
+	</div>
+{% endif %}

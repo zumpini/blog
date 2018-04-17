@@ -1,0 +1,35 @@
+{% load staticfiles %}
+{% for post in page %}
+	<div class="post" id="{{post.pk}}">
+		<img src="{% static 'blog/images/empty.png' %}" class="icon" title="Картинка статьи" width="200" alt="Картинка статьи">
+		<div class="container">
+		<a href="{% url 'blog:post' pk=post.pk %}"><h3 class="title">{{post.title}}</h3></a>
+		<p class="content">{{post.content|truncatewords:30|safe}}</p>
+		<p class="author-date">
+			<a href="{% url 'blog:author' post.user.username %}">{{post.user.username}}</a>
+			<span>{{post.pub_date}}</span>
+		</p>
+		<p class="cathegory">
+			{% for c in post.cathegory.all %}
+				<a href="{% url 'blog:cathegory' c.name %}">{{c.name}}</a>
+			{% endfor %}
+		</p>
+		<p class="statistics">
+			<img width="15" title="Количество просмотров" alt="Количество просмотров" src="{% static 'blog/images/glass.png' %}">{{post.total_views}}
+			<img width="15" title="Количество комментариев" alt="Количество комментариев" src="{% static 'blog/images/comment.png' %}">{{post.comment_set.all|length}}
+		</p>
+		{% url 'blog:profile' as profile %}
+		{% if request.path == profile %}
+			<p class="extra">
+				<a href="{% url 'blog:post_handler' action='update' pk=post.pk %}">Обновить</a>
+				<a href="{% url 'blog:post_handler' action='delete' pk=post.pk %}">Удалить</a>
+				<a href="{% url 'blog:statistics' pk=post.pk %}">Статистика</a>
+			</p>
+		{% endif %}
+		
+		</div>
+	</div>
+	<div class="delimiter"></div>
+{% empty %}
+	<p>По Вашему запросу ничего не найдено</p>
+{% endfor %}

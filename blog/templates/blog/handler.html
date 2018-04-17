@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+{% include 'blog/auth_reg.html' %}
+<a href="{% url 'blog:index' %}"><h3>На главную страницу</h3></a><br>
+{% if redirect_string %}
+	<a href="{{redirect_string}}"><h3>Вернуться назад</h3></a>
+{% endif %}
+<div>
+	{% if question %}
+		<h3>{{question}}</h3>
+	{% endif %}
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% if page %}
+			<input type="hidden" name="page" value="{{page}}">
+		{% endif %}
+		{% if next %}
+			<input type="hidden" name="next" value="{{next}}">
+		{% endif %}
+		<table>{{form.as_table}}</table>
+		<p><input type="submit" value="{{action_message}}"></p>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+{% include 'blog/auth_reg.html' %}
+<a href="{% url 'blog:index' %}"><h3>На главную страницу</h3></a>
+<div class="post" id="{{post.pk}}">
+	<img src="{% static 'blog/images/empty.png' %}" class="icon" title="Картинка статьи" width="200" alt="Картинка статьи">
+	<h3 class="title">{{post.title}}</h3>
+	<p class="content">{{post.content|safe}}</p>
+	<p class="author-date">
+		<a href="{% url 'blog:author' post.user.username %}">{{post.user.username}}</a>
+		<span class="date">{{post.pub_date}}</span>
+	</p>
+	<p class="cathegory">
+		{% for c in post.cathegory.all %}
+			<a href="{% url 'blog:cathegory' c.name %}">{{c.name}}</a>
+		{% endfor %}
+	</p>
+</div>
+<div class="delimiter"></div>
+<a href="{% url 'blog:comment_handler' action='add' pk=post.pk %}?page={{page.number}}"><h3>Добавить комментарий</h3></a>
+<h3>Комментарии: {{post.comment_set.all|length}}</h3>
+<div id="comments">
+{{comments|safe}}
+</div>
+{% include 'blog/paginator.html' %}
+{% endblock %}
